@@ -15,7 +15,7 @@ const INITIAL_DEFAULT_CONTACTS = [
     priority: 1,
     notifyViaSms: true,
     notifyViaCall: true,
-    isPrimary: true
+    isPrimary: true,
   },
   {
     id: 'contact-default-2',
@@ -26,8 +26,8 @@ const INITIAL_DEFAULT_CONTACTS = [
     priority: 2,
     notifyViaSms: true,
     notifyViaCall: false,
-    isPrimary: false
-  }
+    isPrimary: false,
+  },
 ];
 
 export function ContactsProvider({ children }) {
@@ -49,7 +49,7 @@ export function ContactsProvider({ children }) {
       id: 'contact-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
       ...contactData,
       priority: contacts.length + 1,
-      isPrimary: contacts.length === 0 ? true : Boolean(contactData.isPrimary)
+      isPrimary: contacts.length === 0 ? true : Boolean(contactData.isPrimary),
     };
 
     let updated = [...contacts];
@@ -89,10 +89,13 @@ export function ContactsProvider({ children }) {
   };
 
   const deleteContact = (id) => {
-    const updated = contacts.filter((c) => c.id !== id);
+    let updated = contacts.filter((c) => c.id !== id);
     // If we deleted the primary contact and have others, make the first one primary
     if (updated.length > 0 && !updated.some((c) => c.isPrimary)) {
-      updated[0].isPrimary = true;
+      updated = updated.map((contact, index) => ({
+        ...contact,
+        isPrimary: index === 0,
+      }));
     }
     setContacts(updated);
     return { success: true };
@@ -101,7 +104,7 @@ export function ContactsProvider({ children }) {
   const setPrimaryContact = (id) => {
     const updated = contacts.map((c) => ({
       ...c,
-      isPrimary: c.id === id
+      isPrimary: c.id === id,
     }));
     setContacts(updated);
   };
@@ -118,7 +121,7 @@ export function ContactsProvider({ children }) {
         updateContact,
         deleteContact,
         setPrimaryContact,
-        clearAllContacts
+        clearAllContacts,
       }}
     >
       {children}

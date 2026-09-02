@@ -27,11 +27,11 @@ The platform combines **Artificial Intelligence, location services, interactive 
 
 During medical emergencies or dangerous situations, people may struggle to quickly:
 
-* 🚑 Find nearby emergency services
-* 📍 Share their location
-* 🏥 Locate nearby hospitals
-* 🤖 Get immediate AI-powered guidance
-* 📞 Access emergency resources quickly
+- 🚑 Find nearby emergency services
+- 📍 Share their location
+- 🏥 Locate nearby hospitals
+- 🤖 Get immediate AI-powered guidance
+- 📞 Access emergency resources quickly
 
 **SafeSense AI** aims to help solve these problems by providing a centralized and intelligent emergency safety platform.
 
@@ -59,9 +59,9 @@ Provides quick access to emergency-related tools and important safety resources.
 
 Designed to work smoothly across:
 
-* 💻 Desktop
-* 📱 Mobile
-* 📟 Tablet
+- 💻 Desktop
+- 📱 Mobile
+- 📟 Tablet
 
 ### 🔐 Secure API Architecture
 
@@ -73,29 +73,29 @@ Sensitive API keys and credentials are handled securely using server-side enviro
 
 ## Frontend
 
-* HTML5
-* CSS3
-* JavaScript
-* Tailwind CSS
+- HTML5
+- CSS3
+- JavaScript
+- Tailwind CSS
 
 ## Backend
 
-* Node.js
-* Express.js
-* Vercel Serverless Functions
+- Node.js
+- Express.js
+- Vercel Serverless Functions
 
 ## Artificial Intelligence
 
-* Google Gemini API
+- Google Gemini API
 
 ## Maps & Location
 
-* Google Maps API
-* Browser Geolocation API
+- Google Maps API
+- Browser Geolocation API
 
 ## Deployment
 
-* Vercel
+- Vercel
 
 ---
 
@@ -124,9 +124,9 @@ SafeSense-ai/
 
 Make sure you have installed:
 
-* Node.js
-* npm
-* Git
+- Node.js
+- npm
+- Git
 
 ---
 
@@ -148,6 +148,18 @@ cd safesense-ai
 
 ```bash
 npm install
+```
+
+---
+
+## 🧪 Quality Scripts
+
+```bash
+npm run lint
+npm run lint:fix
+npm run format
+npm run format:check
+npm test
 ```
 
 ---
@@ -185,12 +197,12 @@ Used to retrieve the user's location after permission is granted.
 
 SafeSense AI follows important security practices:
 
-* 🔒 API keys are stored in environment variables
-* 🚫 `.env` files are excluded from GitHub
-* 🔐 Sensitive credentials are not exposed in frontend code
-* 🛡️ Server-side APIs handle sensitive operations
-* ✅ User input should be validated
-* 🚨 API keys should be restricted in production
+- 🔒 API keys are stored in environment variables
+- 🚫 `.env` files are excluded from GitHub
+- 🔐 Sensitive credentials are not exposed in frontend code
+- 🛡️ Server-side APIs handle sensitive operations
+- ✅ User input should be validated
+- 🚨 API keys should be restricted in production
 
 ### Recommended `.gitignore`
 
@@ -229,16 +241,16 @@ SafeSense AI is designed to be deployed using **Vercel**.
 
 Planned features include:
 
-* 🚑 Nearby hospital discovery
-* 🚓 Nearby police station discovery
-* 🆘 One-click SOS functionality
-* 📍 Real-time location sharing
-* 👨‍👩‍👧 Emergency contact management
-* 🔔 Emergency notifications
-* 🧠 Improved AI emergency guidance
-* 🏥 Medical emergency resources
-* 🌙 Dark mode
-* 📱 Progressive Web App (PWA) support
+- 🚑 Nearby hospital discovery
+- 🚓 Nearby police station discovery
+- 🆘 One-click SOS functionality
+- 📍 Real-time location sharing
+- 👨‍👩‍👧 Emergency contact management
+- 🔔 Emergency notifications
+- 🧠 Improved AI emergency guidance
+- 🏥 Medical emergency resources
+- 🌙 Dark mode
+- 📱 Progressive Web App (PWA) support
 
 ---
 
@@ -284,7 +296,7 @@ git push origin feature/your-feature-name
 
 **Vipin Prajapati**
 
-* GitHub: https://github.com/vipinpra09
+- GitHub: https://github.com/vipinpra09
 
 ---
 
