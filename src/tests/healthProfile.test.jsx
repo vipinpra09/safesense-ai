@@ -9,7 +9,7 @@ describe('Emergency Health Profile Validation', () => {
       allergies: 'Penicillin, Peanuts',
       conditions: 'Asthma',
       medications: 'Albuterol',
-      emergencyNotes: 'Carries EpiPen'
+      emergencyNotes: 'Carries EpiPen',
     };
 
     const { isValid, errors } = validateHealthProfile(profile);
@@ -20,12 +20,24 @@ describe('Emergency Health Profile Validation', () => {
   it('flags fields that exceed character safety limits', () => {
     const overlyLongProfile = {
       fullName: 'A'.repeat(80), // limit is 70
-      allergies: 'B'.repeat(600) // limit is 500
+      allergies: 'B'.repeat(600), // limit is 500
     };
 
     const { isValid, errors } = validateHealthProfile(overlyLongProfile);
     expect(isValid).toBe(false);
     expect(errors.fullName).toBeDefined();
     expect(errors.allergies).toBeDefined();
+  });
+
+  it('flags overly long conditions and emergency notes fields', () => {
+    const overlyLongProfile = {
+      conditions: 'C'.repeat(501),
+      emergencyNotes: 'N'.repeat(1001),
+    };
+
+    const { isValid, errors } = validateHealthProfile(overlyLongProfile);
+    expect(isValid).toBe(false);
+    expect(errors.conditions).toBeDefined();
+    expect(errors.emergencyNotes).toBeDefined();
   });
 });

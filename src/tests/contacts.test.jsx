@@ -19,7 +19,7 @@ describe('Emergency Contacts Validation & Processing', () => {
     const emptyContact = {
       name: '',
       relationship: '',
-      phone: ''
+      phone: '',
     };
     const { isValid, errors } = validateContact(emptyContact);
     expect(isValid).toBe(false);
@@ -32,10 +32,24 @@ describe('Emergency Contacts Validation & Processing', () => {
       name: 'Sarah Miller',
       relationship: 'Spouse / Partner',
       phone: '+1 (555) 234-5678',
-      email: 'sarah@example.com'
+      email: 'sarah@example.com',
     };
     const { isValid, errors } = validateContact(validContact);
     expect(isValid).toBe(true);
     expect(Object.keys(errors).length).toBe(0);
+  });
+
+  it('rejects contacts with overlong names and malformed emails', () => {
+    const invalidContact = {
+      name: 'A'.repeat(61),
+      relationship: 'Friend',
+      phone: '+1 (555) 123-4567',
+      email: 'invalid-email',
+    };
+
+    const { isValid, errors } = validateContact(invalidContact);
+    expect(isValid).toBe(false);
+    expect(errors.name).toBeDefined();
+    expect(errors.email).toBeDefined();
   });
 });

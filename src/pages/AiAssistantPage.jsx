@@ -1,8 +1,7 @@
 import React from 'react';
 import { AiChat } from '../components/ai/AiChat';
 import { HealthSnapshot } from '../components/emergency/HealthSnapshot';
-import { Bot, PhoneCall, ShieldAlert, Sparkles, AlertOctagon } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Bot, PhoneCall, ShieldAlert, AlertOctagon } from 'lucide-react';
 import { useEmergency } from '../context/EmergencyContext';
 
 export function AiAssistantPage() {
@@ -67,7 +66,9 @@ export function AiAssistantPage() {
             <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-300">
               <li className="flex items-start gap-1.5">
                 <span className="text-amber-500 font-bold">•</span>
-                <span>Speak or type the most critical symptom first (e.g. "difficulty breathing").</span>
+                <span>
+                  Speak or type the most critical symptom first (e.g. "difficulty breathing").
+                </span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-amber-500 font-bold">•</span>

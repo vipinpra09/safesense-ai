@@ -1,144 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
-import {
-  Send,
-  Bot,
-  User,
-  Trash2,
-  Sparkles,
-  ShieldAlert,
-  Loader2,
-  RefreshCw,
-  PhoneCall
-} from 'lucide-react';
+import React from 'react';
+import { Send, Bot, User, Trash2, Loader2, PhoneCall } from 'lucide-react';
 import { QuickSituationChips } from './QuickSituationChips';
 import { VoiceInput } from './VoiceInput';
 import { StructuredSummaryCard } from './StructuredSummaryCard';
-import { sendGeminiEmergencyTriage } from '../../services/geminiService';
-import { useHealthProfile } from '../../context/HealthProfileContext';
-import { useEmergency } from '../../context/EmergencyContext';
-import { useAccessibility } from '../../context/AccessibilityContext';
-import { formatCoordinates } from '../../utils/formatters';
-
-const INITIAL_GREETING = {
-  id: 'msg-initial',
-  sender: 'ai',
-  timestamp: new Date().toISOString(),
-  data: {
-    urgency: 'low',
-    situation_summary:
-      'SafeSense AI Emergency Assistant is ready. Describe what is happening or choose a preset below for instant guidance.',
-    recommended_actions: [
-      'State what happened or what assistance is required.',
-      'Use voice input or type your situation in plain words.',
-      'If you are experiencing life-threatening symptoms, dial 911 or 112 immediately.'
-    ],
-    what_to_tell_responders: [
-      'Your exact location or address landmarks.',
-      'Primary symptoms and immediate safety hazards.'
-    ],
-    important_information: [
-      'Do not panic. Keep your airways clear and remain in a safe location.'
-    ],
-    disclaimer:
-      'SafeSense AI provides assistive guidance only and does not replace medical diagnosis or emergency services.'
-  }
-};
+import { useAiChat } from './useAiChat';
 
 export function AiChat() {
-  const [messages, setMessages] = useState([INITIAL_GREETING]);
-  const [inputPrompt, setInputPrompt] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { profile, getFormattedSummary } = useHealthProfile();
-  const { location, isEmergencyActive } = useEmergency();
-  const { settings } = useAccessibility();
-
-  const messagesEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
-
-  const handleSendMessage = async (customText = null) => {
-    const textToSend = typeof customText === 'string' ? customText : inputPrompt;
-    if (!textToSend || !textToSend.trim() || isLoading) return;
-
-    const userMessage = {
-      id: 'msg-user-' + Date.now(),
-      sender: 'user',
-      text: textToSend.trim(),
-      timestamp: new Date().toISOString()
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInputPrompt('');
-    setIsLoading(true);
-
-    // Build context
-    const healthSummary = getFormattedSummary();
-    const locationSummary = location
-      ? `GPS: ${formatCoordinates(location.latitude, location.longitude)} (Accuracy: ${Math.round(
-          location.accuracy || 0
-        )}m)`
-      : 'Location unavailable';
-
-    try {
-      const triageResult = await sendGeminiEmergencyTriage({
-        prompt: textToSend.trim(),
-        conversationHistory: messages,
-        healthSummary: healthSummary || null,
-        locationSummary
-      });
-
-      const aiResponseMsg = {
-        id: 'msg-ai-' + Date.now(),
-        sender: 'ai',
-        timestamp: new Date().toISOString(),
-        data: triageResult
-      };
-
-      setMessages((prev) => [...prev, aiResponseMsg]);
-    } catch (err) {
-      console.error('AI Triage error:', err);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: 'msg-err-' + Date.now(),
-          sender: 'ai',
-          timestamp: new Date().toISOString(),
-          data: {
-            urgency: 'high',
-            situation_summary:
-              'Could not connect to external AI service. Please contact 911 / 112 directly if in immediate danger.',
-            recommended_actions: [
-              'Call official emergency services (911 / 112).',
-              'Alert your emergency contacts.',
-              'Stay in a safe, visible position.'
-            ],
-            what_to_tell_responders: ['Current location and symptoms.'],
-            important_information: ['Keep warm and conserve phone battery.']
-          }
-        }
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
-  const handleClearChat = () => {
-    setMessages([INITIAL_GREETING]);
-  };
+  const {
+    messages,
+    inputPrompt,
+    isLoading,
+    messagesEndRef,
+    setInputPrompt,
+    handleSendMessage,
+    handleKeyDown,
+    handleClearChat,
+  } = useAiChat();
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden flex flex-col h-[750px] max-h-[85vh]">
@@ -156,9 +33,7 @@ export function AiChat() {
                 Gemini Active
               </span>
             </div>
-            <p className="text-xs text-indigo-200">
-              Calm, accessible emergency triage & guidance
-            </p>
+            <p className="text-xs text-indigo-200">Calm, accessible emergency triage & guidance</p>
           </div>
         </div>
 
@@ -202,7 +77,7 @@ export function AiChat() {
                     <span className="text-[10px] opacity-75">
                       {new Date(msg.timestamp).toLocaleTimeString([], {
                         hour: '2-digit',
-                        minute: '2-digit'
+                        minute: '2-digit',
                       })}
                     </span>
                   </div>

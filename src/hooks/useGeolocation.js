@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { getGoogleMapsUrl } from '../utils/formatters';
 
 export function useGeolocation() {
@@ -19,7 +19,7 @@ export function useGeolocation() {
     const options = {
       enableHighAccuracy: true,
       timeout: 12000,
-      maximumAge: 0
+      maximumAge: 0,
     };
 
     navigator.geolocation.getCurrentPosition(
@@ -30,7 +30,7 @@ export function useGeolocation() {
           accuracy: pos.coords.accuracy,
           altitude: pos.coords.altitude,
           timestamp: pos.timestamp,
-          mapsUrl: getGoogleMapsUrl(pos.coords.latitude, pos.coords.longitude)
+          mapsUrl: getGoogleMapsUrl(pos.coords.latitude, pos.coords.longitude),
         };
         setLocation(coords);
         setStatus('success');
@@ -42,7 +42,8 @@ export function useGeolocation() {
 
         switch (err.code) {
           case err.PERMISSION_DENIED:
-            errMsg = 'Location permission was denied. You can still enter your location manually or proceed with SOS.';
+            errMsg =
+              'Location permission was denied. You can still enter your location manually or proceed with SOS.';
             newStatus = 'denied';
             break;
           case err.POSITION_UNAVAILABLE:
@@ -73,6 +74,6 @@ export function useGeolocation() {
     status,
     error,
     requestLocation,
-    clearLocation
+    clearLocation,
   };
 }
