@@ -8,6 +8,11 @@
   Your Safety. Smarter. Faster. Connected.
 </p>
 
+<p align="center">
+  <a href="https://safesense-ai.vercel.app/sos">🌐 Live Demo</a> •
+  <a href="https://github.com/vipinpra09/safesense-ai">💻 GitHub Repository</a>
+</p>
+
 ---
 
 ## 🚨 About SafeSense AI
@@ -104,7 +109,6 @@ SafeSense-ai/
 │
 ├── public/                 # Static assets
 ├── src/                    # Application source code
-│
 ├── .env.example            # Environment variable template
 ├── .gitignore              # Ignored files and secrets
 ├── package.json            # Dependencies and scripts
@@ -203,6 +207,12 @@ node_modules/
 # 🌐 Deployment
 
 SafeSense AI is designed to be deployed using **Vercel**.
+
+### 🚀 Live Application
+
+**Try SafeSense AI here:**
+
+👉 https://safesense-ai.vercel.app/sos
 
 ### Deployment Steps
 
